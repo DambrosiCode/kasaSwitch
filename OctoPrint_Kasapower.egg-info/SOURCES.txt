@@ -1,0 +1,16 @@
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+OctoPrint_Kasapower.egg-info/PKG-INFO
+OctoPrint_Kasapower.egg-info/SOURCES.txt
+OctoPrint_Kasapower.egg-info/dependency_links.txt
+OctoPrint_Kasapower.egg-info/entry_points.txt
+OctoPrint_Kasapower.egg-info/not-zip-safe
+OctoPrint_Kasapower.egg-info/requires.txt
+OctoPrint_Kasapower.egg-info/top_level.txt
+octoprint_kasaPower/__init__.py
+octoprint_kasaPower/static/css/kasaPower.css
+octoprint_kasaPower/static/js/kasaPower.js
+octoprint_kasaPower/static/less/kasaPower.less
+octoprint_kasaPower/templates/README.txt

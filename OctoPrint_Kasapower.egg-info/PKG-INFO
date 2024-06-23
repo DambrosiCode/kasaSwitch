@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: OctoPrint-Kasapower
+Version: 0.1.0
+Summary: Switch for turning kasa outlet on and off
+Home-page: https://github.com/DambrosiCode/OctoPrint-Kasapower
+Author: chipepper
+Author-email: tfp221b@gmail.com
+License: AGPLv3
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3,<4
