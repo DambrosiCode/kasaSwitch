@@ -1,1 +1,43 @@
-<a data-bind="click: sendCommand" href="javascript:void(0)">(Kasa Switch)</a>
+<body onlLoad="getStateOnLoad()">
+	<a data-bind="click: sendCommand" onClick="loadingIcon()" href="javascript:void(0)"></i>
+		<span class="fa-stack">
+			<i class="fa-solid fa-bolt fa-stack-1x"></i>
+			<i id="powerOff" class="fa-solid fa-ban fa-stack-2x" style="color:Tomato"></i>
+			<i id="powerLoading" class="fa-solid fa-spinner fa-stack-2x" style="color:orange; display: none;"></i>
+		</span>
+	</a>
+</body>
+
+<script>
+function loadingIcon(){
+                console.log('LOADING...')
+                document.getElementById("powerOff").style.display = 'none';
+                document.getElementById("powerLoading").style.display = 'block';
+        };
+
+
+function getStateOnLoad(){
+            $.ajax({
+                url: API_BASEURL + "plugin/kasaPower",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({
+                        command: "powerCheck"
+                }),
+                contentType: "application/json; charset=UTF-8",
+
+                success: function (data, status, foo) {
+                        console.log('SUCCESS!');
+                        console.log(data['switchOn']);
+                        if(data['switchOn']){
+                                document.getElementById("powerLoading").style.display = 'none';
+                                document.getElementById("powerOff").style.display = 'none';
+                        }else{
+                                document.getElementById("powerLoading").style.display = 'none';
+                                document.getElementById("powerOff").style.display = 'block';
+                        }
+                }
+            });
+
+}
+</script>

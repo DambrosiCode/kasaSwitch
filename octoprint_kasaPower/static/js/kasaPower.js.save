@@ -25,20 +25,13 @@ $(function() {
                 type: "POST",
                 dataType: "json",
                 data: JSON.stringify({
-			command: "powerOn"
+                    command: "powerOn"
                 }),
                 contentType: "application/json; charset=UTF-8",
-
-                success: function (data, status, foo) {
+                success: function (data, status) {
 			console.log('SUCCESS!');
-			console.log(data['switchOn']);
-			if(data['switchOn']){
-	                        document.getElementById("powerLoading").style.display = 'none';
-				document.getElementById("powerOff").style.display = 'none';
-			}else{
-        	                document.getElementById("powerLoading").style.display = 'none';
-				document.getElementById("powerOff").style.display = 'block';
-			}
+			console.log(data);
+			console.log(status);
 		}
             });
         };

@@ -1,11 +1,11 @@
 import octoprint.plugin
 
+import flask
+
 import asyncio
 from kasa import Discover, Credentials
 
-import flask
-
-async def switch(alias, username=None, password=None):
+async def switch(alias, username=None, password=None, change_state=True):
 
 	creds = Credentials(username, password)
 
@@ -13,25 +13,20 @@ async def switch(alias, username=None, password=None):
 	ipaddress = [i for i in found if found[i].alias==alias][0]
 
 	dev = await Discover.discover_single(ipaddress, credentials=creds)
-
-	if dev.is_on:
-		await dev.turn_off()
-	else:
-		await dev.turn_on()
-
-	await dev.update()
+	if change_state:
+		if dev.is_on:
+			await dev.turn_off()
+		else:
+			await dev.turn_on()
+		await dev.update()
 	return dev.is_on
 
 
-class KasaSwitchPlugin(octoprint.plugin.StartupPlugin,
+class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
                        octoprint.plugin.TemplatePlugin,
                        octoprint.plugin.SettingsPlugin,
 		       octoprint.plugin.AssetPlugin,
 		       octoprint.plugin.SimpleApiPlugin):
-
-	def __init__(self):
-		self.switch_on = True
-
 	def on_after_startup(self):
         	self._logger.info("Kasa alias is %s" % self._settings.get(["kasaAlias"]))
     
@@ -55,19 +50,20 @@ class KasaSwitchPlugin(octoprint.plugin.StartupPlugin,
 		)
 
 	def on_api_command(self, command, data):
-		self._logger.info("Button has been pressed on")
-		self._logger.info(command)
-		self._logger.info(data)
-		self._logger.info("Kasa alias is %s" % self._settings.get(["kasaAlias"]))
+		if command == 'powerOn':
+			self._logger.info("Button has been pressed on")
+			self._logger.info(command)
+			self._logger.info(data)
+			self._logger.info("Kasa alias is %s" % self._settings.get(["kasaAlias"]))
 
-		kasa_alias = self._settings.get(["kasaAlias"])
+			kasa_alias = self._settings.get(["kasaAlias"])
 
-		is_on = asyncio.run(switch(kasa_alias))
-		self.switch_on = is_on
+			is_on = asyncio.run(switch(kasa_alias))
+			return flask.jsonify(switchOn=is_on)
+		elif command=='powerCheck':
+			return flask.jsonify(switchOn=is_on, change_state=False)
 
-	def on_api_get(self, request):
-		return flask.jsonify(data=self.switch_on)
 
 __plugin_name__ = "Kasa Power Switch" 
 __plugin_pythoncompat__ = ">=3.7,<4"
-__plugin_implementation__ = KasaSwitchPlugin()
+__plugin_implementation__ = HelloWorldPlugin()
