@@ -31,10 +31,10 @@ function getStateOnLoad(){
                         console.log(data['switchOn']);
                         if(data['switchOn']){
                                 document.getElementById("powerLoading").style.display = 'none';
-                                document.getElementById("powerOff").style.display = 'none';
+                                document.getElementById("powerOff").style.display = 'block';
                         }else{
                                 document.getElementById("powerLoading").style.display = 'none';
-                                document.getElementById("powerOff").style.display = 'block';
+                                document.getElementById("powerOff").style.display = 'none';
                         }
                 }
             });
