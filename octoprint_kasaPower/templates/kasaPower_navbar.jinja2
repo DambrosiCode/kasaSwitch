@@ -3,10 +3,25 @@
 		<span class="fa-stack">
 			<i class="fa-solid fa-bolt fa-stack-1x"></i>
 			<i id="powerOff" class="fa-solid fa-ban fa-stack-2x" style="color:Tomato"></i>
-			<i id="powerLoading" class="fa-solid fa-spinner fa-stack-2x" style="color:orange; display: none;"></i>
+			<i id="powerLoading" class="rotate fa-solid fa-spinner fa-stack-2x" style="color:orange; display: none;"></i>
 		</span>
 	</a>
 </body>
+
+<style>
+.rotate {
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+</style>
 
 <script>
 function loadingIcon(){
