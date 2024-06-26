@@ -4,6 +4,8 @@
  * Author: chipepper
  * License: AGPLv3
  */
+
+
 $(function() {
     function KasapowerViewModel(parameters) {
         var self = this;

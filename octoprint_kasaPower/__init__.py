@@ -46,22 +46,26 @@ class HelloWorldPlugin(octoprint.plugin.StartupPlugin,
 
 	def get_api_commands(self):
 		return dict(
-			powerOn=[]
+			powerOn=[],
+			powerCheck=[]
 		)
 
 	def on_api_command(self, command, data):
+		self._logger.info('your command master...')
+		self._logger.info(command)
+		self._logger.info(data)
 		if command == 'powerOn':
-			self._logger.info("Button has been pressed on")
-			self._logger.info(command)
-			self._logger.info(data)
-			self._logger.info("Kasa alias is %s" % self._settings.get(["kasaAlias"]))
-
+			self._logger.info('power switch')
 			kasa_alias = self._settings.get(["kasaAlias"])
 
 			is_on = asyncio.run(switch(kasa_alias))
 			return flask.jsonify(switchOn=is_on)
 		elif command=='powerCheck':
-			return flask.jsonify(switchOn=is_on, change_state=False)
+			self._logger.info('power check')
+			kasa_alias = self._settings.get(["kasaAlias"])
+
+			is_on = asyncio.run(switch(kasa_alias, change_state=False))
+			return flask.jsonify(switchOn=is_on)
 
 
 __plugin_name__ = "Kasa Power Switch" 

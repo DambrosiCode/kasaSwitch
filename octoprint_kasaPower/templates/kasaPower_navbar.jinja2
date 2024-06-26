@@ -1,5 +1,5 @@
-<body onlLoad="getStateOnLoad()">
-	<a data-bind="click: sendCommand" onClick="loadingIcon()" href="javascript:void(0)"></i>
+<body>
+	<a data-bind="click: sendCommand" onClick="loadingIcon()" onload="loadingIcon()" href="javascript:void(0)"></i>
 		<span class="fa-stack">
 			<i class="fa-solid fa-bolt fa-stack-1x"></i>
 			<i id="powerOff" class="fa-solid fa-ban fa-stack-2x" style="color:Tomato"></i>
@@ -15,14 +15,17 @@ function loadingIcon(){
                 document.getElementById("powerLoading").style.display = 'block';
         };
 
+window.onload = function() {
+	console.log("let's go!");
 
-function getStateOnLoad(){
-            $.ajax({
-                url: API_BASEURL + "plugin/kasaPower",
+	loadingIcon();
+
+	$.ajax({
+	        url: API_BASEURL + "plugin/kasaPower",
                 type: "POST",
                 dataType: "json",
                 data: JSON.stringify({
-                        command: "powerCheck"
+	                command: "powerCheck"
                 }),
                 contentType: "application/json; charset=UTF-8",
 
@@ -31,10 +34,10 @@ function getStateOnLoad(){
                         console.log(data['switchOn']);
                         if(data['switchOn']){
                                 document.getElementById("powerLoading").style.display = 'none';
-                                document.getElementById("powerOff").style.display = 'block';
+                                document.getElementById("powerOff").style.display = 'none';
                         }else{
                                 document.getElementById("powerLoading").style.display = 'none';
-                                document.getElementById("powerOff").style.display = 'none';
+                                document.getElementById("powerOff").style.display = 'block';
                         }
                 }
             });
